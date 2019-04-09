@@ -46,7 +46,15 @@ export default class Actions extends React.Component {
     return (
       <TouchableOpacity
         style={[styles.container, this.props.containerStyle]}
-        onPress={this.props.onPressActionButton || this.onActionsPress}
+        onPress={() => {
+          if (this.props.onPressActionButton) {
+            const pressActionButtonReturn = this.props.onPressActionButton();
+            
+            if (pressActionButtonReturn) return this.onActionsPress();
+          }
+      
+          return this.onActionsPress();
+        }}
       >
         {this.renderIcon()}
       </TouchableOpacity>
